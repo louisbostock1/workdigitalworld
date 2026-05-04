@@ -1,0 +1,336 @@
+/* =============================================
+   WHAT IS WORK IN A DIGITAL WORLD? — styles.css
+   Blog Index — Card Grid Layout
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* --- CSS Variables --- */
+:root {
+    --bg: #fafaf8;
+    --bg-card: #ffffff;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border: rgba(0, 0, 0, 0.07);
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.05);
+    --radius: 12px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6eef8;
+        --text-muted: #8b949e;
+        --text-light: #6e7681;
+        --accent: #60a5fa;
+        --accent-hover: #93c5fd;
+        --border: rgba(255, 255, 255, 0.06);
+        --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
+        --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Progress Bar --- */
+#progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #7c3aed);
+    width: 0%;
+    transition: width 0.1s ease;
+    z-index: 100;
+}
+
+/* --- Site Header --- */
+.site-header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1.5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+}
+
+.site-brand {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.site-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3vw, 1.75rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.site-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(0.8rem, 2.8vw, 1.2rem);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.site-tagline {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+}
+
+/* --- Site Nav (header) --- */
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    transition: color 0.15s ease, background 0.15s ease;
+    text-transform: lowercase;
+    letter-spacing: 0.01em;
+}
+
+.nav-link:hover {
+    color: var(--text);
+    background: var(--border);
+}
+
+.nav-link.active {
+    color: var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+    font-weight: 500;
+}
+
+/* --- Blog Index Grid --- */
+.blog-index {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* --- Blog Card --- */
+.blog-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.25s ease;
+
+    /* Fade-in on load */
+    opacity: 0;
+    transform: translateY(24px);
+    animation: card-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.blog-card:nth-child(1)  { animation-delay: 0.05s; }
+.blog-card:nth-child(2)  { animation-delay: 0.10s; }
+.blog-card:nth-child(3)  { animation-delay: 0.15s; }
+.blog-card:nth-child(4)  { animation-delay: 0.20s; }
+.blog-card:nth-child(5)  { animation-delay: 0.25s; }
+.blog-card:nth-child(6)  { animation-delay: 0.30s; }
+.blog-card:nth-child(7)  { animation-delay: 0.35s; }
+.blog-card:nth-child(8)  { animation-delay: 0.40s; }
+.blog-card:nth-child(9)  { animation-delay: 0.45s; }
+.blog-card:nth-child(10) { animation-delay: 0.50s; }
+.blog-card:nth-child(11) { animation-delay: 0.55s; }
+
+@keyframes card-in {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+.blog-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Card image */
+.card-image-link { display: block; }
+
+.card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #e5e7eb;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.blog-card:hover .card-image img {
+    transform: scale(1.04);
+}
+
+/* Card body */
+.card-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+}
+
+.card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card-week {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(37, 99, 235, 0.08);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+}
+
+.card-date {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: 300;
+}
+
+.card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+.card-title a {
+    text-decoration: none;
+    color: var(--text);
+    transition: color 0.15s ease;
+}
+
+.card-title a:hover {
+    color: var(--accent);
+}
+
+.card-excerpt {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    flex: 1;
+}
+
+.card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 0.25rem;
+    transition: gap 0.2s ease, color 0.15s ease;
+}
+
+.card-cta:hover {
+    gap: 0.6rem;
+    color: var(--accent-hover);
+}
+
+/* --- Footer --- */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.footer-content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.footer-tagline {
+    font-style: italic;
+    opacity: 0.75;
+    margin-top: 0.25rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem 1rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-index {
+        padding: 0 1rem 3rem;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .card-body {
+        padding: 1rem 1.25rem 1.25rem;
+    }
+}
+
+@media (max-width: 900px) and (min-width: 641px) {
+    .blog-index {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
